@@ -1,24 +1,28 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <limits>
+
 using namespace std;
 
-int main() {
-    int n;
-    long long a[(int)2e5+1];
-    cin>>n;
-    set<long long> s;
-    for(int i = 0; i < n; ++i ){
-        cin>>a[i];
+int main()
+{
+  long n;
+  cin >> n;
+  long* a = new long[n];
+  for (long i = 0; i < n; i++) {
+    cin >> a[i];
+  }
+  
+  // Tính toán
+  long minLoss = numeric_limits<long long int>::max();
+  for (long i = 0; i < n - 1; i++) {
+    for (long j = i + 1; j < n; j++) {
+      long loss = a[i] - a[j];
+      if (loss >= 0 && loss < minLoss) {
+        minLoss = loss;
+      }
     }
-    set<long long>::iterator it;
-    long long temp = (long long)100000000000000000;
-    for(int i = n - 1; i >= 0; --i){
-        s.insert(a[i]);
-        it = s.find(a[i]);
-        if(it != s.begin()){
-            --it;
-            temp = min(temp,(long long)a[i] - (*it));
-        }
-    }
-    cout<<temp<<endl;
-    return 0;
+  }
+  
+  cout << minLoss;
 }
